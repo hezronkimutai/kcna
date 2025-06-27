@@ -20,4 +20,4 @@ The application is deployed at:
 
 ## License
 
-Specify your license here.
+MIT License
