@@ -75,7 +75,8 @@
                     <li>D. ${q['Option D']}</li>
                     ${q['Option E'] ? `<li>E. ${q['Option E']}</li>` : ''}
                 </ul>
-                <div style="color:#888;font-size:0.95em;margin-top:8px;">
+                <button type="button" onclick="const ans=this.nextElementSibling;ans.style.display=ans.style.display==='none'?'block':'none';this.textContent=ans.style.display==='none'?'Show Answer':'Hide Answer';">Show Answer</button>
+                <div style="color:#888;font-size:0.95em;margin-top:8px; display:none;">
                     <strong>Answer:</strong> ${q['Correct Answer']}<br>
                     <strong>Explanation:</strong> ${q['Explanation']}
                 </div>
