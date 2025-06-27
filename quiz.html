@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kubernetes Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question-block {
+            background: #fff;
+            margin: 24px auto;
+            padding: 20px 24px;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.08);
+        }
+        .question-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        .options-list {
+            margin: 0 0 0 20px;
+            padding: 0;
+        }
+        .options-list li {
+            margin-bottom: 6px;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 0 auto 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Kubernetes Quiz Viewer</h1>
+<input type="file" id="upload" accept=".csv" />
+<div id="table-container"></div>
+
+<script>
+    document.getElementById('upload').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const text = e.target.result;
+            const rows = text.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
+            const headers = rows[0].map(h => h.trim().replace(/"/g, ''));
+            let html = '';
+
+            // Find indices for extra fields
+            const idxAnswer = headers.findIndex(h => h.toLowerCase().includes('correct answer'));
+            const idxExplanation = headers.findIndex(h => h.toLowerCase().includes('explanation'));
+            const idxDomain = headers.findIndex(h => h.toLowerCase().includes('domain'));
+            const idxCompetency = headers.findIndex(h => h.toLowerCase().includes('competency'));
+
+            for (let i = 1; i < rows.length; i++) {
+                if (rows[i].length === headers.length) {
+                    const cells = rows[i].map(cell => cell.trim().replace(/"/g, ''));
+                    html += `<div class="question-block">`;
+                    html += `<div class="question-title">Q${i}: ${cells[0]}</div>`;
+                    html += `<ol class="options-list" type="A">`;
+                    for (let j = 1; j < cells.length; j++) {
+                        // Stop at empty cell or if header is one of the extra fields
+                        if (!cells[j] || [idxAnswer, idxExplanation, idxDomain, idxCompetency].includes(j)) break;
+                        html += `<li>${cells[j]}</li>`;
+                    }
+                    html += `</ol>`;
+                    if (idxAnswer !== -1 && cells[idxAnswer]) {
+                        html += `<div><strong>Correct Answer:</strong> ${cells[idxAnswer]}</div>`;
+                    }
+                    if (idxExplanation !== -1 && cells[idxExplanation]) {
+                        html += `<div><strong>Explanation:</strong> ${cells[idxExplanation]}</div>`;
+                    }
+                    if (idxDomain !== -1 && cells[idxDomain]) {
+                        html += `<div><strong>Domain:</strong> ${cells[idxDomain]}</div>`;
+                    }
+                    if (idxCompetency !== -1 && cells[idxCompetency]) {
+                        html += `<div><strong>Competency:</strong> ${cells[idxCompetency]}</div>`;
+                    }
+                    html += `</div>`;
+                }
+            }
+
+            document.getElementById('table-container').innerHTML = html;
+        };
+        reader.readAsText(file);
+    });
+</script>
+
+</body>
+</html>
