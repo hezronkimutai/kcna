@@ -45,6 +45,48 @@
 <input type="file" id="upload" accept=".csv" />
 <div id="table-container"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+    // Automatically load and display quiz.csv if present
+    fetch('quiz.csv')
+        .then(response => response.text())
+        .then(csvText => {
+            Papa.parse(csvText, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    renderQuiz(results.data);
+                }
+            });
+        });
+
+    function renderQuiz(questions) {
+        const container = document.getElementById('table-container');
+        container.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.innerHTML = `
+                <div class="question-title">${idx + 1}. ${q['Question']}</div>
+                <ul class="options-list">
+                    <li>A. ${q['Option A']}</li>
+                    <li>B. ${q['Option B']}</li>
+                    <li>C. ${q['Option C']}</li>
+                    <li>D. ${q['Option D']}</li>
+                    ${q['Option E'] ? `<li>E. ${q['Option E']}</li>` : ''}
+                </ul>
+                <div style="color:#888;font-size:0.95em;margin-top:8px;">
+                    <strong>Answer:</strong> ${q['Correct Answer']}<br>
+                    <strong>Explanation:</strong> ${q['Explanation']}
+                </div>
+                <div style="color:#aaa;font-size:0.85em;margin-top:4px;">
+                    <strong>Domain:</strong> ${q['Domain']} | <strong>Competency:</strong> ${q['Competency']}
+                </div>
+            `;
+            container.appendChild(block);
+        });
+    }
+</script>
 <script>
     document.getElementById('upload').addEventListener('change', function (e) {
         const file = e.target.files[0];
