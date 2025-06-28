@@ -62,32 +62,142 @@
             });
         });
 
+    // Test engine: splits questions into tests of 60, timed, scored
     function renderQuiz(questions) {
         const container = document.getElementById('table-container');
         container.innerHTML = '';
-        questions.forEach((q, idx) => {
-            const block = document.createElement('div');
-            block.className = 'question-block';
-            block.innerHTML = `
-                <div class="question-title">${idx + 1}. ${q['Question']}</div>
-                <ul class="options-list">
-                    <li>A. ${q['Option A']}</li>
-                    <li>B. ${q['Option B']}</li>
-                    <li>C. ${q['Option C']}</li>
-                    <li>D. ${q['Option D']}</li>
-                    ${q['Option E'] ? `<li>E. ${q['Option E']}</li>` : ''}
-                </ul>
-                <button type="button" onclick="const ans=this.nextElementSibling;ans.style.display=ans.style.display==='none'?'block':'none';this.textContent=ans.style.display==='none'?'Show Answer':'Hide Answer';">Show Answer</button>
-                <div style="color:#888;font-size:0.95em;margin-top:8px; display:none;">
-                    <strong>Answer:</strong> ${q['Correct Answer']}<br>
-                    <strong>Explanation:</strong> ${q['Explanation']}
-                </div>
-                <div style="color:#aaa;font-size:0.85em;margin-top:4px;">
-                    <strong>Domain:</strong> ${q['Domain']} | <strong>Competency:</strong> ${q['Competency']}
-                </div>
-            `;
-            container.appendChild(block);
+        const tests = [];
+        for (let i = 0; i < questions.length; i += 60) {
+            tests.push(questions.slice(i, i + 60));
+        }
+
+        // Test selection UI
+        const selectDiv = document.createElement('div');
+        selectDiv.style.textAlign = 'center';
+        selectDiv.style.margin = '24px 0';
+        selectDiv.innerHTML = `<strong>Select Test:</strong> `;
+        tests.forEach((test, idx) => {
+            const btn = document.createElement('button');
+            btn.textContent = `Test ${idx + 1}`;
+            btn.style.margin = '0 8px 0 0';
+            btn.onclick = () => startTest(idx);
+            selectDiv.appendChild(btn);
         });
+        container.appendChild(selectDiv);
+
+        // Timer and test state
+        let timerInterval = null;
+        let timeLeft = 90 * 60; // 90 minutes in seconds
+
+        function startTest(testIdx) {
+            container.innerHTML = '';
+            const testQuestions = tests[testIdx];
+            const answers = Array(testQuestions.length).fill(null);
+
+            // Timer UI
+            const timerDiv = document.createElement('div');
+            timerDiv.style.textAlign = 'center';
+            timerDiv.style.fontWeight = 'bold';
+            timerDiv.style.fontSize = '1.2em';
+            timerDiv.style.margin = '12px 0';
+            container.appendChild(timerDiv);
+
+            function updateTimer() {
+                const min = Math.floor(timeLeft / 60);
+                const sec = timeLeft % 60;
+                timerDiv.textContent = `Time Left: ${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+            }
+            updateTimer();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+
+            // Questions UI
+            testQuestions.forEach((q, idx) => {
+                const block = document.createElement('div');
+                block.className = 'question-block';
+                block.innerHTML = `
+                    <div class="question-title">${idx + 1}. ${q['Question']}</div>
+                    <ul class="options-list">
+                        <li><label><input type="radio" name="q${idx}" value="A"> A. ${q['Option A']}</label></li>
+                        <li><label><input type="radio" name="q${idx}" value="B"> B. ${q['Option B']}</label></li>
+                        <li><label><input type="radio" name="q${idx}" value="C"> C. ${q['Option C']}</label></li>
+                        <li><label><input type="radio" name="q${idx}" value="D"> D. ${q['Option D']}</label></li>
+                        ${q['Option E'] ? `<li><label><input type="radio" name="q${idx}" value="E"> E. ${q['Option E']}</label></li>` : ''}
+                    </ul>
+                `;
+                container.appendChild(block);
+            });
+
+            // Submit button
+            const submitBtn = document.createElement('button');
+            submitBtn.textContent = 'Submit Test';
+            submitBtn.style.display = 'block';
+            submitBtn.style.margin = '24px auto';
+            submitBtn.style.fontSize = '1.1em';
+            submitBtn.onclick = submitTest;
+            container.appendChild(submitBtn);
+
+            function submitTest() {
+                clearInterval(timerInterval);
+                // Collect answers
+                for (let i = 0; i < testQuestions.length; i++) {
+                    const radios = document.getElementsByName(`q${i}`);
+                    for (const radio of radios) {
+                        if (radio.checked) {
+                            answers[i] = radio.value;
+                            break;
+                        }
+                    }
+                }
+                // Score calculation
+                let correct = 0;
+                for (let i = 0; i < testQuestions.length; i++) {
+                    if (answers[i] && answers[i].toUpperCase() === testQuestions[i]['Correct Answer'].toUpperCase()) {
+                        correct++;
+                    }
+                }
+                const score = Math.round((correct / testQuestions.length) * 100);
+                const passed = score >= 75;
+                // Show results
+                container.innerHTML = `
+                    <div class="question-block" style="text-align:center;">
+                        <h2>Test Complete</h2>
+                        <div style="font-size:1.3em;margin:12px 0;">Score: <strong>${score}/100</strong></div>
+                        <div style="font-size:1.1em;color:${passed ? 'green' : 'red'};">
+                            ${passed ? 'PASS' : 'FAIL'} (Pass mark: 75)
+                        </div>
+                        <div style="margin:18px 0;">
+                            <button onclick="location.reload()">Return to Test Selection</button>
+                        </div>
+                    </div>
+                `;
+                // Optionally, show correct answers and explanations
+                for (let i = 0; i < testQuestions.length; i++) {
+                    const q = testQuestions[i];
+                    const userAns = answers[i] || 'No Answer';
+                    const isCorrect = userAns.toUpperCase() === q['Correct Answer'].toUpperCase();
+                    const block = document.createElement('div');
+                    block.className = 'question-block';
+                    block.style.background = isCorrect ? '#e8ffe8' : '#ffe8e8';
+                    block.innerHTML = `
+                        <div class="question-title">${i + 1}. ${q['Question']}</div>
+                        <div><strong>Your Answer:</strong> ${userAns}</div>
+                        <div><strong>Correct Answer:</strong> ${q['Correct Answer']}</div>
+                        <div><strong>Explanation:</strong> ${q['Explanation']}</div>
+                        <div style="color:#aaa;font-size:0.85em;">
+                            <strong>Domain:</strong> ${q['Domain']} | <strong>Competency:</strong> ${q['Competency']}
+                        </div>
+                    `;
+                    container.appendChild(block);
+                }
+            }
+        }
     }
 </script>
 <script>
