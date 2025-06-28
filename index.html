@@ -15,6 +15,26 @@
             box-sizing: border-box;
             animation: bgFadeIn 1.2s ease;
         }
+        #score-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            text-align: center;
+            font-size: 1.3em;
+            font-family: Montserrat,Arial,sans-serif;
+            color: #fff;
+            background: linear-gradient(90deg,#00eaff 0%,#0072ff 100%);
+            padding: 12px 0 10px 0;
+            border-radius: 0 0 18px 18px;
+            box-shadow: 0 2px 24px #00eaff30;
+            width: 100%;
+            margin: 0;
+        }
+        .score-bar-spacer {
+            height: 48px;
+        }
         @keyframes bgFadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -325,16 +345,39 @@
             const testQuestions = tests[testIdx];
             const answers = Array(testQuestions.length).fill(null);
 
+            // Score UI (fixed)
+            let scoreDiv = document.getElementById('score-bar');
+            if (!scoreDiv) {
+                scoreDiv = document.createElement('div');
+                scoreDiv.id = 'score-bar';
+                document.body.prepend(scoreDiv);
+            }
+            // Spacer to prevent content from hiding under fixed bar
+            const spacer = document.createElement('div');
+            spacer.className = 'score-bar-spacer';
+            container.appendChild(spacer);
+
             // Timer UI
             const timerDiv = document.createElement('div');
             timerDiv.className = 'timer-fancy';
             container.appendChild(timerDiv);
+
+            function updateScoreBar() {
+                let correct = 0;
+                for (let i = 0; i < testQuestions.length; i++) {
+                    if (answers[i] && answers[i].toUpperCase() === testQuestions[i]['Correct Answer'].toUpperCase()) {
+                        correct++;
+                    }
+                }
+                scoreDiv.innerHTML = `Score: <strong>${correct}</strong> / ${testQuestions.length}`;
+            }
 
             function updateTimer() {
                 const min = Math.floor(timeLeft / 60);
                 const sec = timeLeft % 60;
                 timerDiv.innerHTML = `Time Left: <span>${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}</span>`;
             }
+            updateScoreBar();
             updateTimer();
             timerInterval = setInterval(() => {
                 timeLeft--;
@@ -358,8 +401,33 @@
                         <li><label><input type="radio" name="q${idx}" value="D"> D. ${q['Option D']}</label></li>
                         ${q['Option E'] ? `<li><label><input type="radio" name="q${idx}" value="E"> E. ${q['Option E']}</label></li>` : ''}
                     </ul>
+                    <div class="show-answer" style="display:none;margin-top:10px;font-weight:bold;"></div>
                 `;
                 container.appendChild(block);
+
+                // Add event listeners to radio buttons for live feedback and scoring
+                const radios = block.querySelectorAll('input[type="radio"]');
+                const showAnswerDiv = block.querySelector('.show-answer');
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function () {
+                        // Prevent changing answer after selection
+                        radios.forEach(r => r.disabled = true);
+
+                        answers[idx] = radio.value;
+                        // Show correct answer
+                        const correctAns = q['Correct Answer'].toUpperCase();
+                        let userAns = radio.value.toUpperCase();
+                        if (userAns === correctAns) {
+                            showAnswerDiv.style.color = 'green';
+                            showAnswerDiv.innerHTML = `Correct! The answer is <b>${correctAns}</b>.`;
+                        } else {
+                            showAnswerDiv.style.color = 'red';
+                            showAnswerDiv.innerHTML = `Incorrect. The correct answer is <b>${correctAns}</b>.`;
+                        }
+                        showAnswerDiv.style.display = 'block';
+                        updateScoreBar();
+                    });
+                });
             });
 
             // Submit button
