@@ -39,6 +39,79 @@
 <body>
     <a class="back-link" href="index.html">&larr; Back to Quiz</a>
     <h1>CNCF Exam Tips</h1>
+<div class="tips-block" style="background:#e3f2fd;">
+    <h2>✅ Kubectl Basic Patterns &amp; YAML Tips Cheat Sheet</h2>
+
+    <h3>🔧 <strong>Basic Kubectl Patterns</strong></h3>
+    <ul>
+        <li><strong>Check logs of a Pod:</strong>
+            <pre><code>kubectl logs POD_NAME</code></pre>
+        </li>
+        <li><strong>Check logs of a specific container in a Pod:</strong>
+            <pre><code>kubectl logs POD_NAME -c CONTAINER_NAME</code></pre>
+        </li>
+        <li><strong>Check logs of a previously terminated container:</strong>
+            <pre><code>kubectl logs -p -c CONTAINER_NAME POD_NAME</code></pre>
+        </li>
+        <li><strong>Describe a resource:</strong>
+            <pre><code>kubectl describe POD POD_NAME
+kubectl describe DEPLOYMENT DEPLOYMENT_NAME</code></pre>
+        </li>
+        <li><strong>Apply configuration from YAML:</strong>
+            <pre><code>kubectl apply -f file.yaml</code></pre>
+        </li>
+        <li><strong>Get resources:</strong>
+            <pre><code>kubectl get pods
+kubectl get pods -n NAMESPACE
+kubectl get all</code></pre>
+        </li>
+        <li><strong>Delete resources:</strong>
+            <pre><code>kubectl delete -f file.yaml
+kubectl delete pod POD_NAME</code></pre>
+        </li>
+        <li><strong>Generate resource YAML (quick template):</strong>
+            <pre><code>kubectl create deployment nginx --image=nginx -o yaml --dry-run=client &gt; deployment.yaml</code></pre>
+        </li>
+        <li><strong>Explain resource structure:</strong>
+            <pre><code>kubectl explain pod.spec.containers</code></pre>
+        </li>
+        <li><strong>Scale a deployment:</strong>
+            <pre><code>kubectl scale deployment DEPLOYMENT_NAME --replicas=3</code></pre>
+        </li>
+    </ul>
+    <hr>
+    <h3>📜 <strong>YAML Writing Tips</strong></h3>
+    <ul>
+        <li><strong>Use kubectl to generate templates:</strong>
+            <pre><code>kubectl create deployment myapp --image=nginx -o yaml --dry-run=client &gt; myapp.yaml</code></pre>
+        </li>
+        <li><strong>Always check YAML indentation:</strong>
+            <ul>
+                <li>YAML is space-sensitive (use 2 spaces, not tabs).</li>
+            </ul>
+        </li>
+        <li><strong>Apply a YAML manifest:</strong>
+            <pre><code>kubectl apply -f myapp.yaml</code></pre>
+        </li>
+        <li><strong>Validate YAML using dry-run:</strong>
+            <pre><code>kubectl apply -f myapp.yaml --dry-run=client</code></pre>
+        </li>
+        <li><strong>Check for errors quickly:</strong>
+            <pre><code>yamllint file.yaml</code></pre>
+        </li>
+    </ul>
+    <hr>
+    <h3>🚀 <strong>Pro Tip:</strong></h3>
+    <ul>
+        <li>Set an alias for faster commands:
+            <pre><code>alias k=kubectl</code></pre>
+            Then run commands like:
+            <pre><code>k get pods
+k apply -f file.yaml</code></pre>
+        </li>
+    </ul>
+    <p>This cheat sheet will help speed up your workflow during CNCF exams and daily Kubernetes usage! 🚀</p>
+</div>
     <div class="tips-block">
         <h2>🧠 General Tips for All CNCF Exams</h2>
         <ul>
