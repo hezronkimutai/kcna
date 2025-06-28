@@ -114,7 +114,13 @@
         }
         .options-list li {
             margin-bottom: 10px;
-            transition: color 0.2s;
+            transition: color 0.2s, background 0.2s;
+        }
+        .options-list li.selected {
+            background: #00eaff40;
+            color: #222;
+            border-radius: 8px;
+            font-weight: 600;
         }
         .options-list li:hover {
             color: #00eaff;
@@ -418,6 +424,14 @@
                     radio.addEventListener('change', function () {
                         // Prevent changing answer after selection
                         radios.forEach(r => r.disabled = true);
+
+                        // Highlight the selected option
+                        radios.forEach(r => {
+                            const li = r.closest('li');
+                            if (li) li.classList.remove('selected');
+                        });
+                        const selectedLi = radio.closest('li');
+                        if (selectedLi) selectedLi.classList.add('selected');
 
                         answers[idx] = radio.value;
                         // Show correct answer
