@@ -2,40 +2,272 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kubernetes Quiz</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            margin: 20px;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+            margin: 0;
+            min-height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+            animation: bgFadeIn 1.2s ease;
+        }
+        @keyframes bgFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #fff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 2.7em;
+            letter-spacing: 2px;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 24px #00eaff80, 0 1px 0 #222;
+            animation: fadeInDown 1s;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px);}
+            to { opacity: 1; transform: translateY(0);}
         }
         .question-block {
-            background: #fff;
-            margin: 24px auto;
-            padding: 20px 24px;
-            max-width: 800px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.13);
+            margin: 32px auto;
+            padding: 32px 36px;
+            max-width: 820px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37), 0 0 0 4px #00eaff40;
+            backdrop-filter: blur(8px);
+            border: 1.5px solid #00eaff80;
+            transition: box-shadow 0.3s, transform 0.3s;
+            animation: fadeInUp 1.2s;
+        }
+        .question-block:hover {
+            box-shadow: 0 12px 48px 0 #00eaff80, 0 0 0 6px #00eaff80;
+            transform: translateY(-4px) scale(1.02);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
         }
         .question-title {
-            font-weight: bold;
-            margin-bottom: 12px;
-            font-size: 1.1em;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            margin-bottom: 18px;
+            font-size: 1.3em;
+            color: #00eaff;
+            text-shadow: 0 2px 8px #00eaff40;
         }
         .options-list {
             margin: 0 0 0 20px;
             padding: 0;
+            color: #fff;
+            font-size: 1.08em;
         }
         .options-list li {
-            margin-bottom: 6px;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+        .options-list li:hover {
+            color: #00eaff;
+            cursor: pointer;
         }
         input[type="file"] {
             display: block;
-            margin: 0 auto 20px;
+            margin: 0 auto 24px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 8px 16px;
+            border: 1px solid #00eaff80;
+            box-shadow: 0 2px 8px #00eaff20;
+        }
+        #table-container {
+            animation: fadeInUp 1.2s;
+        }
+        .tips-link-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #00eaff 0%, #0072ff 100%);
+            color: #fff !important;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 1.15em;
+            padding: 10px 28px 10px 18px;
+            border-radius: 30px;
+            box-shadow: 0 4px 24px #00eaff60;
+            text-decoration: none;
+            letter-spacing: 1px;
+            position: relative;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+            margin-bottom: 10px;
+        }
+        .tips-link-btn:hover {
+            background: linear-gradient(90deg, #0072ff 0%, #00eaff 100%);
+            box-shadow: 0 8px 32px #00eaff80;
+            transform: scale(1.04);
+        }
+        .tips-link-btn::before {
+            content: "⚡";
+            margin-right: 10px;
+            font-size: 1.2em;
+            vertical-align: middle;
+        }
+    </style>
+    <style>
+        .timer-fancy {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 18px auto;
+            padding: 14px 36px;
+            background: linear-gradient(90deg, #00eaff 0%, #0072ff 100%);
+            border-radius: 32px;
+            box-shadow: 0 4px 32px #00eaff60, 0 1.5px 0 #fff3;
+            font-family: 'Montserrat', 'Roboto Mono', monospace, Arial, sans-serif;
+            font-size: 1.45em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 12px #0072ff80;
+            animation: fadeInDown 1s;
+            position: relative;
+            /* Gradient animated text */
+            background-clip: padding-box;
+            /* Remove color to allow gradient text */
+            color: unset;
+            width: max-content;
+        }
+        .timer-fancy::before {
+            content: "⏰";
+            font-size: 1.2em;
+            margin-right: 14px;
+            filter: drop-shadow(0 1px 4px #00eaff80);
+            animation: pulseTimer 1.5s infinite alternate;
+        }
+        .timer-fancy span {
+            background: linear-gradient(270deg, #00eaff, #ff00cc, #ffea00, #00eaff);
+            background-size: 600% 600%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            animation: gradientMove 3s ease-in-out infinite;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            letter-spacing: inherit;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes pulseTimer {
+            from { opacity: 0.7; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.12); }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .test-select-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            margin: 36px 0 32px 0;
+            padding: 18px 0;
+            background: rgba(0,234,255,0.08);
+            border-radius: 18px;
+            box-shadow: 0 2px 24px #00eaff30;
+            animation: fadeInDown 1s;
+            width: max-content;
+            margin: auto;
+        }
+        .test-select-label {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.18em;
+            color: #fff;
+            font-weight: 700;
+            margin-right: 10px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-select-label i {
+            color: #00eaff;
+            font-size: 1.2em;
+        }
+        .test-btn {
+            background: linear-gradient(90deg, #00eaff 0%, #0072ff 100%);
+            color: #fff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 1.08em;
+            border: none;
+            border-radius: 24px;
+            padding: 10px 26px 10px 18px;
+            margin: 0 6px;
+            box-shadow: 0 2px 16px #00eaff40;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+            outline: none;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-btn:hover, .test-btn:focus {
+            background: linear-gradient(90deg, #0072ff 0%, #00eaff 100%);
+            box-shadow: 0 4px 32px #00eaff80;
+            transform: scale(1.06);
+        }
+        .test-btn:active {
+            background: linear-gradient(90deg, #00eaff 0%, #0072ff 100%);
+            box-shadow: 0 2px 8px #00eaff60;
+            transform: scale(0.98);
+        }
+        .test-btn-icon {
+            font-size: 1.2em;
+            margin-right: 7px;
+            filter: drop-shadow(0 1px 4px #00eaff80);
+        }
+        @media (max-width: 700px) {
+            .test-select-container {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                margin: 18px 0 !important;
+                gap: 10px !important;
+                padding: 10px 0 !important;
+            }
+            .test-select-container .test-btn {
+                width: 100% !important;
+                min-width: 0 !important;
+                margin: 0 0 8px 0 !important;
+                box-sizing: border-box;
+                font-size: 1em;
+                padding: 12px 0;
+            }
+            .test-select-label {
+                justify-content: center;
+                margin-bottom: 8px;
+                font-size: 1em;
+            }
+        }
+        @media (max-width: 480px) {
+            .test-select-container {
+                gap: 7px !important;
+                padding: 6px 0 !important;
+            }
+            .test-select-container .test-btn {
+                font-size: 0.97em;
+                padding: 10px 0;
+            }
         }
     </style>
 </head>
@@ -43,7 +275,7 @@
 
 <h1>KCNA EXAM QUESTIONS</h1>
 <div style="text-align:center; margin-bottom:18px;">
-    <a href="tips.html" style="font-size:1.1em;">&#9889; CNCF Exam Tips</a>
+    <a href="tips.html" class="tips-link-btn">CNCF Exam Tips</a>
 </div>
 <div id="table-container"></div>
 
@@ -73,13 +305,12 @@
 
         // Test selection UI
         const selectDiv = document.createElement('div');
-        selectDiv.style.textAlign = 'center';
-        selectDiv.style.margin = '24px 0';
-        selectDiv.innerHTML = `<strong>Select Test:</strong> `;
+        selectDiv.className = 'test-select-container';
+        selectDiv.innerHTML = `<span class="test-select-label"><i class="fa fa-list-ul"></i> Select Test:</span> `;
         tests.forEach((test, idx) => {
             const btn = document.createElement('button');
-            btn.textContent = `Test ${idx + 1}`;
-            btn.style.margin = '0 8px 0 0';
+            btn.className = 'test-btn';
+            btn.innerHTML = `<span class="test-btn-icon">📝</span>Test ${idx + 1}`;
             btn.onclick = () => startTest(idx);
             selectDiv.appendChild(btn);
         });
@@ -96,16 +327,13 @@
 
             // Timer UI
             const timerDiv = document.createElement('div');
-            timerDiv.style.textAlign = 'center';
-            timerDiv.style.fontWeight = 'bold';
-            timerDiv.style.fontSize = '1.2em';
-            timerDiv.style.margin = '12px 0';
+            timerDiv.className = 'timer-fancy';
             container.appendChild(timerDiv);
 
             function updateTimer() {
                 const min = Math.floor(timeLeft / 60);
                 const sec = timeLeft % 60;
-                timerDiv.textContent = `Time Left: ${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+                timerDiv.innerHTML = `Time Left: <span>${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}</span>`;
             }
             updateTimer();
             timerInterval = setInterval(() => {
