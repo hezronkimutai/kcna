@@ -191,7 +191,6 @@ h1 {
     padding: 2px;
     background: linear-gradient(45deg, #00eaff, #0072ff, #00eaff, #0072ff);
     background-size: 400% 400%;
-    animation: borderGlow 3s ease infinite;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     z-index: -1;
@@ -398,7 +397,7 @@ input[type="file"] {
     backdrop-filter: blur(20px) saturate(180%);
     border: 2px solid transparent;
     position: relative;
-    animation: fadeInUp 1.2s ease, containerFloat 8s ease-in-out infinite;
+    animation: fadeInUp 1.2s ease;
     overflow: hidden;
 }
 
@@ -413,7 +412,6 @@ input[type="file"] {
     padding: 2px;
     background: linear-gradient(45deg, #00eaff, #0072ff, #00c6fb, #00eaff);
     background-size: 400% 400%;
-    animation: borderGlow 4s ease infinite;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     z-index: -1;
@@ -427,7 +425,6 @@ input[type="file"] {
     width: 200%;
     height: 200%;
     background: radial-gradient(circle, rgba(0, 234, 255, 0.1) 0%, transparent 70%);
-    animation: rotateGlow 15s linear infinite;
     z-index: -1;
 }
 
@@ -596,13 +593,14 @@ input[type="file"] {
 }
 
 .test-btn:hover .test-btn-label {
-    color: #00eaff;
-    text-shadow: 0 0 10px rgba(0, 234, 255, 0.8);
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
 }
 
-.test-btn:active {
-    transform: translateY(-4px) scale(1.02);
-    transition-duration: 0.1s;
+.test-btn:hover .test-btn-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Add a special glow effect for the test buttons */

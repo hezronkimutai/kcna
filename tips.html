@@ -8,48 +8,73 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        /* Enhanced back link with modern design */
         .back-link {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, #00eaff 0%, #0072ff 100%);
+            top: 25px;
+            left: 25px;
+            background: linear-gradient(135deg, #00eaff 0%, #0072ff 50%, #00c6fb 100%);
             color: white !important;
-            padding: 12px 20px;
-            border-radius: 25px;
+            padding: 15px 25px;
+            border-radius: 30px;
             text-decoration: none;
             font-family: 'Montserrat', Arial, sans-serif;
             font-weight: 700;
             font-size: 0.9em;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             z-index: 1000;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 2px solid transparent;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px) saturate(180%);
             box-shadow: 
-                0 8px 25px rgba(0, 234, 255, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                0 10px 30px rgba(0, 234, 255, 0.4),
+                0 0 40px rgba(0, 234, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .back-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .back-link:hover::before {
+            left: 100%;
         }
         
         .back-link:hover {
+            background: linear-gradient(135deg, #0072ff 0%, #00eaff 50%, #00c6fb 100%);
             transform: translateY(-3px) scale(1.05);
-            background: linear-gradient(135deg, #0072ff 0%, #00eaff 100%);
             box-shadow: 
-                0 15px 40px rgba(0, 234, 255, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                0 15px 40px rgba(0, 234, 255, 0.5),
+                0 0 60px rgba(0, 234, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
         
+        /* Revolutionary tips block design */
         .tips-block {
-            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
-            margin: 32px auto;
-            padding: 40px 45px;
-            max-width: 900px;
-            border-radius: 24px;
-            backdrop-filter: blur(15px) saturate(180%);
+            background: 
+                linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 50%, rgba(0,234,255,0.05) 100%),
+                linear-gradient(45deg, rgba(0,234,255,0.1) 0%, transparent 50%, rgba(0,114,255,0.1) 100%);
+            margin: 40px auto;
+            padding: 50px 55px;
+            max-width: 950px;
+            border-radius: 30px;
+            backdrop-filter: blur(25px) saturate(200%);
             border: 2px solid transparent;
-            background-clip: padding-box;
             position: relative;
-            animation: fadeInUp 1.2s ease;
             overflow: hidden;
+            box-shadow: 
+                0 25px 60px rgba(0, 234, 255, 0.2),
+                0 10px 30px rgba(0, 114, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
         .tips-block::before {
@@ -59,35 +84,95 @@
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 24px;
+            border-radius: 30px;
             padding: 2px;
-            background: linear-gradient(45deg, #00eaff, #0072ff, #00eaff, #0072ff);
+            background: linear-gradient(45deg, 
+                #00eaff 0%, 
+                #0072ff 25%, 
+                #00c6fb 50%, 
+                #0072ff 75%, 
+                #00eaff 100%);
             background-size: 400% 400%;
-            animation: borderGlow 4s ease infinite;
+            animation: borderShimmer 6s ease-in-out infinite;
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask-composite: exclude;
             z-index: -1;
         }
         
-        .tips-block h2 {
-            color: #00eaff;
-            font-family: 'Montserrat', Arial, sans-serif;
-            font-size: 2em;
-            margin-bottom: 25px;
-            text-shadow: 0 2px 10px rgba(0, 234, 255, 0.5);
-            border-bottom: 2px solid rgba(0, 234, 255, 0.3);
-            padding-bottom: 15px;
+        @keyframes borderShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
         
+        /* Stunning header design */
+        .tips-block h2 {
+            color: #fff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 2.4em;
+            margin-bottom: 35px;
+            text-align: center;
+            background: linear-gradient(45deg, #00eaff, #ffffff, #0072ff, #00c6fb);
+            background-size: 400% 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShimmer 4s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 234, 255, 0.5);
+            position: relative;
+            padding: 25px 0;
+        }
+        
+        .tips-block h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #00eaff, #0072ff, #00c6fb);
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.6);
+        }
+        
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Elegant subheader styling */
         .tips-block h3 {
             color: #fff;
             font-family: 'Montserrat', Arial, sans-serif;
-            font-size: 1.4em;
-            margin: 30px 0 20px 0;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, rgba(0, 234, 255, 0.2) 0%, rgba(0, 114, 255, 0.2) 100%);
-            border-radius: 12px;
-            border-left: 4px solid #00eaff;
+            font-size: 1.6em;
+            margin: 40px 0 25px 0;
+            padding: 20px 25px;
+            background: 
+                linear-gradient(135deg, rgba(0, 234, 255, 0.25) 0%, rgba(0, 114, 255, 0.25) 100%),
+                linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            border-radius: 18px;
+            border: 2px solid transparent;
+            position: relative;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 8px 25px rgba(0, 234, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+        
+        .tips-block h3::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 18px;
+            padding: 2px;
+            background: linear-gradient(45deg, #00eaff, transparent, #0072ff, transparent);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            z-index: -1;
         }
         
         .tips-block ul {
@@ -95,114 +180,355 @@
             padding-left: 0;
         }
         
+        /* Revolutionary list item design */
         .tips-block li {
-            background: rgba(255, 255, 255, 0.05);
-            margin: 15px 0;
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 3px solid #00eaff;
-            transition: all 0.3s ease;
+            background: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 234, 255, 0.05) 100%),
+                linear-gradient(45deg, rgba(0, 234, 255, 0.08) 0%, transparent 100%);
+            margin: 20px 0;
+            padding: 25px 30px;
+            border-radius: 18px;
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             list-style: none;
             position: relative;
-        }
-        
-        .tips-block li:hover {
-            background: rgba(0, 234, 255, 0.1);
-            transform: translateX(10px);
-            box-shadow: 0 5px 20px rgba(0, 234, 255, 0.2);
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 8px 25px rgba(0, 234, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            cursor: pointer;
         }
         
         .tips-block li::before {
-            content: '💡';
+            content: '';
             position: absolute;
-            left: -15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(135deg, #00eaff, #0072ff);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 18px;
+            padding: 2px;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(0, 234, 255, 0.3) 25%, 
+                transparent 50%, 
+                rgba(0, 114, 255, 0.3) 75%, 
+                transparent 100%);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
+        .tips-block li::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background: linear-gradient(180deg, #00eaff, #0072ff, #00c6fb);
+            border-radius: 0 2px 2px 0;
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.5);
+        }
+        
+        .tips-block li:hover {
+            background: 
+                linear-gradient(135deg, rgba(0, 234, 255, 0.2) 0%, rgba(0, 114, 255, 0.2) 50%, rgba(0, 198, 251, 0.2) 100%),
+                linear-gradient(45deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+            transform: translateX(8px) translateY(-2px);
+            box-shadow: 
+                0 15px 40px rgba(0, 234, 255, 0.25),
+                0 5px 15px rgba(0, 114, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .tips-block li:hover::before {
+            opacity: 1;
+        }
+        
+        /* Futuristic code block design */
         pre {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 3px solid #00eaff;
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%),
+                linear-gradient(45deg, rgba(0, 234, 255, 0.1) 0%, transparent 100%);
+            padding: 20px 25px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 2px solid transparent;
             overflow-x: auto;
             font-family: 'Courier New', monospace;
             position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(0, 234, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
         pre::before {
             content: '$ ';
             color: #00eaff;
             font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 234, 255, 0.8);
+        }
+        
+        pre::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            padding: 2px;
+            background: linear-gradient(45deg, 
+                rgba(0, 234, 255, 0.3) 0%, 
+                transparent 25%, 
+                transparent 75%, 
+                rgba(0, 114, 255, 0.3) 100%);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            z-index: -1;
         }
         
         code {
             color: #fff;
             font-family: 'Courier New', monospace;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 234, 255, 0.2);
         }
         
+        /* Enhanced strong text */
         strong {
             color: #00eaff;
-            text-shadow: 0 1px 3px rgba(0, 234, 255, 0.3);
+            text-shadow: 0 1px 5px rgba(0, 234, 255, 0.4);
+            font-weight: 700;
+            background: linear-gradient(45deg, rgba(0, 234, 255, 0.1), transparent);
+            padding: 2px 4px;
+            border-radius: 4px;
         }
         
+        /* Spectacular tip category design */
         .tip-category {
-            background: linear-gradient(135deg, rgba(0, 234, 255, 0.1) 0%, rgba(0, 114, 255, 0.1) 100%);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 30px 0;
-            border: 1px solid rgba(0, 234, 255, 0.3);
+            background: 
+                linear-gradient(135deg, rgba(0, 234, 255, 0.15) 0%, rgba(0, 114, 255, 0.15) 50%, rgba(0, 198, 251, 0.15) 100%),
+                linear-gradient(45deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+            border-radius: 25px;
+            padding: 35px 40px;
+            margin: 40px 0;
+            border: 3px solid transparent;
+            position: relative;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 
+                0 20px 50px rgba(0, 234, 255, 0.2),
+                0 8px 25px rgba(0, 114, 255, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
         }
         
+        .tip-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 25px;
+            padding: 3px;
+            background: linear-gradient(45deg, 
+                #00eaff 0%, 
+                #0072ff 25%, 
+                #00c6fb 50%, 
+                #0072ff 75%, 
+                #00eaff 100%);
+            background-size: 400% 400%;
+            animation: categoryBorderFlow 8s ease-in-out infinite;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            z-index: -1;
+        }
+        
+        @keyframes categoryBorderFlow {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+        
+        /* Magnificent pro tip design */
         .pro-tip {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
-            border: 2px solid rgba(255, 215, 0, 0.5);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
+            background: 
+                linear-gradient(135deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 165, 0, 0.25) 50%, rgba(255, 140, 0, 0.25) 100%),
+                linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
             position: relative;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 
+                0 20px 50px rgba(255, 215, 0, 0.2),
+                0 8px 25px rgba(255, 165, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
         }
         
         .pro-tip::before {
             content: '⭐ PRO TIP';
             position: absolute;
-            top: -12px;
-            left: 20px;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
+            top: -15px;
+            left: 30px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
             color: #000;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 0.8em;
-            letter-spacing: 1px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.85em;
+            letter-spacing: 1.2px;
+            box-shadow: 
+                0 8px 25px rgba(255, 215, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
         
+        .pro-tip::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 3px;
+            background: linear-gradient(45deg, 
+                #FFD700 0%, 
+                #FFA500 25%, 
+                #FF8C00 50%, 
+                #FFA500 75%, 
+                #FFD700 100%);
+            background-size: 400% 400%;
+            animation: proTipGlow 6s ease-in-out infinite;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            z-index: -1;
+        }
+        
+        @keyframes proTipGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Tips page specific overrides for reduced animations */
+        body {
+            animation: none !important;
+        }
+        
+        /* Reduce motion for better readability */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Improved focus states for accessibility */
+        .back-link:focus {
+            outline: 2px solid #00eaff;
+            outline-offset: 2px;
+        }
+        
+        .tips-block li:focus-within {
+            background: rgba(0, 234, 255, 0.1);
+        }
+        
+        /* Better contrast for code blocks */
+        pre code {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        
+        /* Enhanced responsive design */
         @media (max-width: 768px) {
             .tips-block {
-                margin: 80px 10px 20px 10px;
-                padding: 25px 20px;
+                margin: 100px 15px 30px 15px;
+                padding: 30px 25px;
+                border-radius: 20px;
             }
             
             .back-link {
-                top: 10px;
-                left: 10px;
-                padding: 10px 16px;
+                top: 15px;
+                left: 15px;
+                padding: 12px 18px;
                 font-size: 0.8em;
+                border-radius: 25px;
             }
             
             h1 {
                 font-size: 2.2em;
-                margin-top: 60px;
+                margin-top: 80px;
+                letter-spacing: 1px;
+            }
+            
+            .tips-block h2 {
+                font-size: 2em;
+                margin-bottom: 25px;
+            }
+            
+            .tips-block h3 {
+                font-size: 1.4em;
+                padding: 18px 20px;
+                margin: 30px 0 20px 0;
+            }
+            
+            .tips-block li {
+                padding: 20px 25px;
+                margin: 15px 0;
+            }
+            
+            .tip-category {
+                padding: 25px 20px;
+                margin: 30px 0;
+                border-radius: 20px;
+            }
+            
+            .pro-tip {
+                padding: 25px 20px;
+                margin: 25px 0;
+                border-radius: 15px;
+            }
+            
+            pre {
+                padding: 15px 18px;
+                border-radius: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tips-block {
+                margin: 90px 10px 20px 10px;
+                padding: 25px 20px;
+            }
+            
+            .tips-block h2 {
+                font-size: 1.8em;
+            }
+            
+            .tips-block h3 {
+                font-size: 1.2em;
+                padding: 15px 18px;
+            }
+            
+            .tips-block li {
+                padding: 18px 20px;
             }
         }
     </style>
@@ -375,7 +701,7 @@ k apply -f file.yaml</code></pre>
     </div>
     
     <script>
-// Add interactive tooltip system
+// Enhanced interactive tooltip system
 function addTooltips() {
     const commands = document.querySelectorAll('pre code');
     commands.forEach(code => {
@@ -384,14 +710,51 @@ function addTooltips() {
         
         code.addEventListener('click', function() {
             navigator.clipboard.writeText(this.textContent.replace('$ ', '')).then(() => {
-                quizUX.clickSound();
-                quizUX.showNotification('Command copied to clipboard! 📋');
+                // Enhanced notification with modern styling
+                const notification = document.createElement('div');
+                notification.innerHTML = '✅ Command copied! <span style="opacity: 0.8;">📋</span>';
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 30px;
+                    right: 30px;
+                    background: linear-gradient(135deg, rgba(0, 234, 255, 0.95) 0%, rgba(0, 114, 255, 0.95) 100%);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 15px;
+                    z-index: 10000;
+                    font-weight: 600;
+                    font-family: 'Montserrat', Arial, sans-serif;
+                    font-size: 0.9em;
+                    letter-spacing: 0.5px;
+                    backdrop-filter: blur(15px);
+                    box-shadow: 
+                        0 10px 30px rgba(0, 234, 255, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                    border: 2px solid rgba(255, 255, 255, 0.2);
+                    transform: translateY(-20px);
+                    opacity: 0;
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                `;
+                document.body.appendChild(notification);
+                
+                // Animate in
+                setTimeout(() => {
+                    notification.style.transform = 'translateY(0)';
+                    notification.style.opacity = '1';
+                }, 10);
+                
+                // Animate out and remove
+                setTimeout(() => {
+                    notification.style.transform = 'translateY(-20px)';
+                    notification.style.opacity = '0';
+                    setTimeout(() => notification.remove(), 300);
+                }, 2200);
             });
         });
     });
 }
 
-// Add smooth scrolling and section highlighting
+// Enhanced section highlighting with modern effects
 function addSectionHighlighting() {
     const sections = document.querySelectorAll('.tip-category');
     
@@ -399,13 +762,14 @@ function addSectionHighlighting() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.transform = 'scale(1.02)';
-                entry.target.style.boxShadow = '0 10px 30px rgba(0, 234, 255, 0.2)';
+                entry.target.style.filter = 'brightness(1.1)';
+                entry.target.querySelector('::before')?.style?.setProperty('animation-play-state', 'running');
             } else {
                 entry.target.style.transform = 'scale(1)';
-                entry.target.style.boxShadow = 'none';
+                entry.target.style.filter = 'brightness(1)';
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.3 });
     
     sections.forEach(section => observer.observe(section));
 }
@@ -429,51 +793,28 @@ function addNavigationShortcuts() {
     });
 }
 
-// Initialize enhanced features when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Only initialize if quizUX is available (from main.js)
-    if (typeof quizUX !== 'undefined') {
-        addTooltips();
-        addSectionHighlighting();
-        addNavigationShortcuts();
-        
-        // Add loading animation
-        quizUX.addLoadingAnimation();
-        
-        // Show welcome notification
-        setTimeout(() => {
-            quizUX.showNotification('Welcome to KCNA Study Tips! 📚', 'info');
-        }, 1500);
-    } else {
-        // Fallback for when main.js is not loaded
-        addTooltips();
-        addSectionHighlighting();
-        addNavigationShortcuts();
-    }
-});
-
-// Add scroll progress indicator
-function addScrollProgress() {
-    const progressBar = document.createElement('div');
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 3px;
-        background: linear-gradient(90deg, #00eaff, #0072ff, #00c6fb);
-        z-index: 9999;
-        transition: width 0.1s ease;
-    `;
-    document.body.appendChild(progressBar);
+// Add interactive hover effects for list items
+function addInteractiveEffects() {
+    const listItems = document.querySelectorAll('.tips-block li');
     
-    window.addEventListener('scroll', () => {
-        const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-        progressBar.style.width = Math.min(scrollPercent, 100) + '%';
+    listItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(8px) translateY(-2px) scale(1.02)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0) translateY(0) scale(1)';
+        });
     });
 }
 
-addScrollProgress();
+// Initialize all enhanced features
+document.addEventListener('DOMContentLoaded', function() {
+    addTooltips();
+    addSectionHighlighting();
+    addNavigationShortcuts();
+    addInteractiveEffects();
+});
     </script>
 </body>
 </html>
