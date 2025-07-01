@@ -3,31 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CNCF Exam Tips</title>
+    <title>KCNA Exam Tips & Study Guide</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #00eaff 0%, #0072ff 100%);
+            color: white !important;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 8px 25px rgba(0, 234, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .back-link:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: linear-gradient(135deg, #0072ff 0%, #00eaff 100%);
+            box-shadow: 
+                0 15px 40px rgba(0, 234, 255, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .tips-block {
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+            margin: 32px auto;
+            padding: 40px 45px;
+            max-width: 900px;
+            border-radius: 24px;
+            backdrop-filter: blur(15px) saturate(180%);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            animation: fadeInUp 1.2s ease;
+            overflow: hidden;
+        }
+        
+        .tips-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(45deg, #00eaff, #0072ff, #00eaff, #0072ff);
+            background-size: 400% 400%;
+            animation: borderGlow 4s ease infinite;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            z-index: -1;
+        }
+        
+        .tips-block h2 {
+            color: #00eaff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 10px rgba(0, 234, 255, 0.5);
+            border-bottom: 2px solid rgba(0, 234, 255, 0.3);
+            padding-bottom: 15px;
+        }
+        
+        .tips-block h3 {
+            color: #fff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.4em;
+            margin: 30px 0 20px 0;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(0, 234, 255, 0.2) 0%, rgba(0, 114, 255, 0.2) 100%);
+            border-radius: 12px;
+            border-left: 4px solid #00eaff;
+        }
+        
+        .tips-block ul {
+            margin: 20px 0;
+            padding-left: 0;
+        }
+        
+        .tips-block li {
+            background: rgba(255, 255, 255, 0.05);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid #00eaff;
+            transition: all 0.3s ease;
+            list-style: none;
+            position: relative;
+        }
+        
+        .tips-block li:hover {
+            background: rgba(0, 234, 255, 0.1);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 234, 255, 0.2);
+        }
+        
+        .tips-block li::before {
+            content: '💡';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #00eaff, #0072ff);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        pre {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 3px solid #00eaff;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        pre::before {
+            content: '$ ';
+            color: #00eaff;
+            font-weight: bold;
+        }
+        
+        code {
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        strong {
+            color: #00eaff;
+            text-shadow: 0 1px 3px rgba(0, 234, 255, 0.3);
+        }
+        
+        .tip-category {
+            background: linear-gradient(135deg, rgba(0, 234, 255, 0.1) 0%, rgba(0, 114, 255, 0.1) 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(0, 234, 255, 0.3);
+        }
+        
+        .pro-tip {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .pro-tip::before {
+            content: '⭐ PRO TIP';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            .tips-block {
+                margin: 80px 10px 20px 10px;
+                padding: 25px 20px;
+            }
+            
+            .back-link {
+                top: 10px;
+                left: 10px;
+                padding: 10px 16px;
+                font-size: 0.8em;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+                margin-top: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <a class="back-link" href="index.html">Back to Quiz</a>
-    <h1>CNCF Exam Tips</h1>
+    <a class="back-link" href="index.html">
+        <i class="fas fa-arrow-left"></i> Back to Quiz
+    </a>
+    
+    <h1>🚀 KCNA Exam Tips & Study Guide</h1>
 <div class="tips-block">
-    <h2>✅ Kubectl Basic Patterns &amp; YAML Tips Cheat Sheet</h2>
+    <h2>✅ Kubectl Mastery & YAML Excellence</h2>
 
-    <h3>🔧 <strong>Basic Kubectl Patterns</strong></h3>
-    <ul>
-        <li><strong>Check logs of a Pod:</strong>
-            <pre><code>kubectl logs POD_NAME</code></pre>
-        </li>
-        <li><strong>Check logs of a specific container in a Pod:</strong>
-            <pre><code>kubectl logs POD_NAME -c CONTAINER_NAME</code></pre>
-        </li>
-        <li><strong>Check logs of a previously terminated container:</strong>
-            <pre><code>kubectl logs -p -c CONTAINER_NAME POD_NAME</code></pre>
-        </li>
-        <li><strong>Describe a resource:</strong>
-            <pre><code>kubectl describe POD POD_NAME
-kubectl describe DEPLOYMENT DEPLOYMENT_NAME</code></pre>
+    <div class="tip-category">
+        <h3>🔧 Essential Kubectl Commands</h3>
+        <ul>
+            <li><strong>Pod Diagnostics:</strong>
+                <pre><code>kubectl logs POD_NAME</code></pre>
+                Get real-time logs from your pods
+            </li>
+            <li><strong>Multi-Container Debugging:</strong>
+                <pre><code>kubectl logs POD_NAME -c CONTAINER_NAME</code></pre>
+                Target specific containers in multi-container pods
+            </li>
+            <li><strong>Previous Container Logs:</strong>
+                <pre><code>kubectl logs -p -c CONTAINER_NAME POD_NAME</code></pre>
+                Essential for debugging crashed containers
+            </li>
+            <li><strong>Resource Investigation:</strong>
+                <pre><code>kubectl describe pod POD_NAME
+kubectl describe deployment DEPLOYMENT_NAME</code></pre>
+                Get detailed information and events for troubleshooting
+            </li>
         </li>
         <li><strong>Apply configuration from YAML:</strong>
             <pre><code>kubectl apply -f file.yaml</code></pre>
@@ -165,5 +373,107 @@ k apply -f file.yaml</code></pre>
             <li>Use the official CNCF exam environment tutorials before the exam.</li>
         </ul>
     </div>
+    
+    <script>
+// Add interactive tooltip system
+function addTooltips() {
+    const commands = document.querySelectorAll('pre code');
+    commands.forEach(code => {
+        code.style.cursor = 'pointer';
+        code.title = 'Click to copy command';
+        
+        code.addEventListener('click', function() {
+            navigator.clipboard.writeText(this.textContent.replace('$ ', '')).then(() => {
+                quizUX.clickSound();
+                quizUX.showNotification('Command copied to clipboard! 📋');
+            });
+        });
+    });
+}
+
+// Add smooth scrolling and section highlighting
+function addSectionHighlighting() {
+    const sections = document.querySelectorAll('.tip-category');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.transform = 'scale(1.02)';
+                entry.target.style.boxShadow = '0 10px 30px rgba(0, 234, 255, 0.2)';
+            } else {
+                entry.target.style.transform = 'scale(1)';
+                entry.target.style.boxShadow = 'none';
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    sections.forEach(section => observer.observe(section));
+}
+
+// Add keyboard shortcuts for navigation
+function addNavigationShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            window.location.href = 'index.html';
+        }
+        
+        if (e.key === 'Home') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        if (e.key === 'End') {
+            e.preventDefault();
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    });
+}
+
+// Initialize enhanced features when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Only initialize if quizUX is available (from main.js)
+    if (typeof quizUX !== 'undefined') {
+        addTooltips();
+        addSectionHighlighting();
+        addNavigationShortcuts();
+        
+        // Add loading animation
+        quizUX.addLoadingAnimation();
+        
+        // Show welcome notification
+        setTimeout(() => {
+            quizUX.showNotification('Welcome to KCNA Study Tips! 📚', 'info');
+        }, 1500);
+    } else {
+        // Fallback for when main.js is not loaded
+        addTooltips();
+        addSectionHighlighting();
+        addNavigationShortcuts();
+    }
+});
+
+// Add scroll progress indicator
+function addScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, #00eaff, #0072ff, #00c6fb);
+        z-index: 9999;
+        transition: width 0.1s ease;
+    `;
+    document.body.appendChild(progressBar);
+    
+    window.addEventListener('scroll', () => {
+        const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+        progressBar.style.width = Math.min(scrollPercent, 100) + '%';
+    });
+}
+
+addScrollProgress();
+    </script>
 </body>
 </html>
